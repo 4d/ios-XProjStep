@@ -61,6 +61,7 @@
 		48C8EBEE1F335FE9002B1D3E /* Group.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48C8EBE51F335FE5002B1D3E /* Group.swift */; };
 		48C8EBF11F3364DF002B1D3E /* PathKit.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48C8EBF01F336419002B1D3E /* PathKit.swift */; };
 		48C8EBF31F33650F002B1D3E /* CommandHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48C8EBF21F33650F002B1D3E /* CommandHelper.swift */; };
+		48CAFC9F1F973BD000BCF23F /* PBXLegacyTarget.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48CAFC9E1F973BCF00BCF23F /* PBXLegacyTarget.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -133,6 +134,7 @@
 		48C8EBF01F336419002B1D3E /* PathKit.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PathKit.swift; sourceTree = "<group>"; };
 		48C8EBF21F33650F002B1D3E /* CommandHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommandHelper.swift; sourceTree = "<group>"; };
 		48C8EBF51F3370FB002B1D3E /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
+		48CAFC9E1F973BCF00BCF23F /* PBXLegacyTarget.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PBXLegacyTarget.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -192,6 +194,7 @@
 				484D61421F335AF000F837D5 /* PBXCopyFilesBuildPhase.swift */,
 				484D61431F335AF000F837D5 /* PBXFileReference.swift */,
 				484D61441F335AF000F837D5 /* PBXFrameworksBuildPhase.swift */,
+				48CAFC9E1F973BCF00BCF23F /* PBXLegacyTarget.swift */,
 				484D61451F335AF000F837D5 /* PBXGroup.swift */,
 				484D61461F335AF000F837D5 /* PBXHeadersBuildPhase.swift */,
 				484D61471F335AF000F837D5 /* PBXNativeTarget.swift */,
@@ -361,6 +364,7 @@
 				484D61661F335B0A00F837D5 /* PBXBuildFile.swift in Sources */,
 				484D61701F335B0A00F837D5 /* PBXHeadersBuildPhase.swift in Sources */,
 				484D61711F335B0A00F837D5 /* PBXNativeTarget.swift in Sources */,
+				48CAFC9F1F973BD000BCF23F /* PBXLegacyTarget.swift in Sources */,
 				484D61781F335B0A00F837D5 /* PBXResourcesBuildPhase.swift in Sources */,
 				48C8EBE81F335FE9002B1D3E /* ArgumentParser.swift in Sources */,
 				484D61831F335B0A00F837D5 /* XCBuildConfiguration.swift in Sources */,
@@ -489,6 +493,7 @@
 				DEVELOPMENT_TEAM = 37UG5W39Z2;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 3.0;
+				VALID_ARCHS = x86_64;
 			};
 			name = Debug;
 		};
@@ -498,6 +503,7 @@
 				DEVELOPMENT_TEAM = 37UG5W39Z2;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 3.0;
+				VALID_ARCHS = x86_64;
 			};
 			name = Release;
 		};
