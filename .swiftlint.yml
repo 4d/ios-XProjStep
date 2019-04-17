@@ -1,0 +1,7 @@
+included:
+    - Sources
+
+# configurable rules can be customized from this configuration file
+line_length:
+- 150
+- 200

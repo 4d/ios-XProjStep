@@ -14,7 +14,7 @@
 
 import Foundation
 
-public enum XPath {
+public enum PathType {
 
     case absolute(String)
 
@@ -22,7 +22,7 @@ public enum XPath {
 
 }
 
-extension XPath {
+extension PathType {
 
     public func url(with urlForSourceTreeFolder: (SourceTreeFolder) -> URL) -> URL {
 

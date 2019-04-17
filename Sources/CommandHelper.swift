@@ -17,7 +17,7 @@ public func isReadable(_ path: Path) -> Path {
         print("'\(path)' does not exist or is not readable.")
         exit(1)
     }
-    
+
     return path
 }
 
@@ -31,13 +31,12 @@ extension Path: ArgumentConvertible {
     }
 }
 
-
 extension PropertyListSerialization.PropertyListFormat: ArgumentConvertible, CustomStringConvertible {
-    
+
     public static let `default`: PropertyListSerialization.PropertyListFormat = .openStep
     public init(parser: ArgumentParser) throws {
         if let path = parser.shift() {
-            
+
             switch path.lowercased() {
             case "openstep":
                 self = .openStep
@@ -48,21 +47,22 @@ extension PropertyListSerialization.PropertyListFormat: ArgumentConvertible, Cus
             default:
                 throw ArgumentError.invalidType(value: path, type: "format", argument: nil)
             }
-            
+
         } else {
             throw ArgumentError.missingValue(argument: nil)
         }
     }
-    
+
     public var description: String {
         switch self {
-        case . openStep:
+        case .openStep:
             return "openStep"
         case .xml:
             return "xml"
         case .binary:
             return "binary"
+        @unknown default:
+            fatalError()
         }
     }
 }
-

@@ -1,5 +1,28 @@
 # Commander Changelog
 
+## 0.8.0
+
+### Enhancements
+
+- Consolidate the argument descriptors:
+  - All Option-related types now have a validator.
+  - All Option-related types now have a flag parameter.
+  - All constructors have the same constructor arguments order. [#35](https://github.com/kylef/Commander/issues/35)
+
+### Bug Fixes
+
+- Restores compatibility with Linux.
+
+## 0.7.1
+
+### Bug Fixes
+
+- The Swift Package now contains the Commander library product.
+
+## 0.7.0
+
+Switches to Swift 4.0.
+
 ### Bug Fixes
 
 - Better detection of ANSI support in output tty.

@@ -11,7 +11,7 @@ import Foundation
 //swiftlint:disable:next force_try
 let nonescapeRegex = try! NSRegularExpression(pattern: "^[a-z0-9_\\$\\.\\/]+$", options: .caseInsensitive)
 let specialRegexes: [String: NSRegularExpression] =  Dictionary(tuples:
-    ["\\\\", "\\\"", "\\n", "\\r", "\\t"].flatMap {
+    ["\\\\", "\\\"", "\\n", "\\r", "\\t"].compactMap {
         if let regular = try? NSRegularExpression(pattern: $0, options: []) {
             return ($0, regular)
         } else {

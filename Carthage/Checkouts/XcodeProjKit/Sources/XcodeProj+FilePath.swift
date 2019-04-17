@@ -10,8 +10,8 @@ import Foundation
 
 extension XcodeProj {
 
-    func paths(_ current: PBXGroup, prefix: String) -> [String: XPath] {
-        var ps: [String: XPath] = [:]
+    func paths(_ current: PBXGroup, prefix: String) -> [String: PathType] {
+        var ps: [String: PathType] = [:]
 
         for file in current.fileRefs {
             if let path = file.path, let sourceTree = file.sourceTree {

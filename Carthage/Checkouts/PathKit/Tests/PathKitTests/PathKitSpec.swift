@@ -9,10 +9,11 @@ func == (lhs:ThrowError, rhs:ThrowError) -> Bool { return true }
 
 public func testPathKit() {
 describe("PathKit") {
-  let fixtures = Path(#file).parent() + "Fixtures"
+  let filePath = #file
+  let fixtures = Path(filePath).parent() + "Fixtures"
 
   $0.before {
-    Path.current = Path(#file).parent()
+    Path.current = Path(filePath).parent()
   }
 
   $0.it("provides the system separator") {
@@ -194,13 +195,15 @@ describe("PathKit") {
       try expect(resolvedPath) == Path("/usr/bin/swift")
     }
 
-#if !os(Linux)
     $0.it("can create a relative symlink in the same directory") {
-      let path = fixtures + "symlinks/same-dir"
-      let resolvedPath = try path.symlinkDestination()
-      try expect(resolvedPath.normalize()) == fixtures + "symlinks/file"
+      #if os(Linux)
+        throw skip()
+      #else
+        let path = fixtures + "symlinks/same-dir"
+        let resolvedPath = try path.symlinkDestination()
+        try expect(resolvedPath.normalize()) == fixtures + "symlinks/file"
+      #endif
     }
-#endif
   }
 
   $0.it("can return the last component") {
@@ -210,7 +213,7 @@ describe("PathKit") {
 
   $0.it("can return the last component without extension") {
     try expect(Path("a/b/c.d").lastComponentWithoutExtension) == "c"
-    try expect(Path("a/..").lastComponentWithoutExtension) == "."
+    try expect(Path("a/..").lastComponentWithoutExtension) == ".."
   }
 
   $0.it("can be split into components") {
@@ -264,12 +267,14 @@ describe("PathKit") {
       try expect((fixtures + "permissions/writable").isWritable).to.beTrue()
     }
 
-#if !os(Linux)
     // fatal error: isDeletableFile(atPath:) is not yet implemented
     $0.it("can test if a path is deletable") {
-      try expect((fixtures + "permissions/deletable").isDeletable).to.beTrue()
+      #if os(Linux)
+        throw skip()
+      #else
+        try expect((fixtures + "permissions/deletable").isDeletable).to.beTrue()
+      #endif
     }
-#endif
   }
 
   $0.describe("changing directory") {
@@ -410,15 +415,12 @@ describe("PathKit") {
 
   $0.describe("conforms to SequenceType") {
     $0.it("without options") {
-      #if os(Linux)
-      throw skip()
-      #else
       let path = fixtures + "directory"
       var children = ["child", "subdirectory", ".hiddenFile"].map { path + $0 }
       let generator = path.makeIterator()
       while let child = generator.next() {
         generator.skipDescendants()
-        if let index = children.index(of: child) {
+        if let index = children.firstIndex(of: child) {
           children.remove(at: index)
         } else {
           throw failure("Generated unexpected element: <\(child)>")
@@ -427,7 +429,6 @@ describe("PathKit") {
 
       try expect(children.isEmpty).to.beTrue()
       try expect(Path("/non/existing/directory/path").makeIterator().next()).to.beNil()
-      #endif
     }
   
     $0.it("with options") {
@@ -439,7 +440,7 @@ describe("PathKit") {
       let generator = path.iterateChildren(options: .skipsHiddenFiles).makeIterator()
       while let child = generator.next() {
         generator.skipDescendants()
-        if let index = children.index(of: child) {
+        if let index = children.firstIndex(of: child) {
           children.remove(at: index)
         } else {
           throw failure("Generated unexpected element: <\(child)>")
@@ -480,6 +481,8 @@ describe("PathKit") {
     try expect(Path("a")) == "./." + "a"
     try expect(Path(".")) == "." + "."
     try expect(Path(".")) == "./." + "./."
+    try expect(Path("../a")) == "." + "./../a"
+    try expect(Path("../a")) == "." + "../a"
 
     // Appending (to) '..'
     try expect(Path(".")) == "a" + ".."

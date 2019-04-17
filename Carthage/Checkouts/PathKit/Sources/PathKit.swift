@@ -42,7 +42,7 @@ public struct Path {
       path = "."
     } else if components.first == Path.separator && components.count > 1 {
       let p = components.joined(separator: Path.separator)
-      path = p.substring(from: p.characters.index(after: p.startIndex))
+      path = String(p[p.index(after: p.startIndex)...])
     } else {
       path = components.joined(separator: Path.separator)
     }
@@ -95,8 +95,8 @@ extension Path {
 // MARK: Hashable
 
 extension Path : Hashable {
-  public var hashValue: Int {
-    return path.hashValue
+  public func hash(into hasher: inout Hasher) {
+    hasher.combine(self.path.hashValue)
   }
 }
 
@@ -106,7 +106,7 @@ extension Path : Hashable {
 extension Path {
   /// Test whether a path is absolute.
   ///
-  /// - Returns: `true` iff the path begings with a slash
+  /// - Returns: `true` iff the path begins with a slash
   ///
   public var isAbsolute: Bool {
     return path.hasPrefix(Path.separator)
@@ -221,7 +221,7 @@ extension Path {
 
   /// The last path component without file extension
   ///
-  /// - Note: This returns "." for "..".
+  /// - Note: This returns "." for ".." on Linux, and ".." on Apple platforms.
   ///
   /// - Returns: the last path component without file extension
   ///
@@ -276,11 +276,7 @@ extension Path {
     guard Path.fileManager.fileExists(atPath: normalize().path, isDirectory: &directory) else {
       return false
     }
-#if os(Linux)
-    return directory
-#else
     return directory.boolValue
-#endif
   }
 
   /// Test whether a path is a regular file.
@@ -295,11 +291,7 @@ extension Path {
     guard Path.fileManager.fileExists(atPath: normalize().path, isDirectory: &directory) else {
       return false
     }
-#if os(Linux)
-  return !directory
-#else
-  return !directory.boolValue
-#endif
+    return !directory.boolValue
   }
 
   /// Test whether a path is a symbolic link.
@@ -598,7 +590,7 @@ extension Path {
 #else
       let matchc = gt.gl_matchc
 #endif
-      return (0..<Int(matchc)).flatMap { index in
+      return (0..<Int(matchc)).compactMap { index in
         if let path = String(validatingUTF8: gt.gl_pathv[index]!) {
           return Path(path)
         }
@@ -765,8 +757,8 @@ internal func +(lhs: String, rhs: String) -> Path {
     rSlice = rSlice.filter { $0 != "." }.fullSlice
 
     // Eats up trailing components of the left and leading ".." of the right side
-    while lSlice.last != ".." && rSlice.first == ".." {
-      if (lSlice.count > 1 || lSlice.first != Path.separator) && !lSlice.isEmpty {
+    while lSlice.last != ".." && !lSlice.isEmpty && rSlice.first == ".." {
+      if lSlice.count > 1 || lSlice.first != Path.separator {
         // A leading "/" is never popped
         lSlice.removeLast()
       }

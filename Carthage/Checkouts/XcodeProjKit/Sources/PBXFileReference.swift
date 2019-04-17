@@ -10,7 +10,7 @@ import Foundation
 
 public class PBXFileReference: PBXReference {
 
-    public func fullPath(_ project: XcodeProj) -> XPath? {
+    public func fullPath(_ project: XcodeProj) -> PathType? {
        return project.objects.fullFilePaths[self.ref]
     }
 

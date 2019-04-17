@@ -11,7 +11,7 @@ import Foundation
 extension Sequence {
 
     func of<T>(type: T.Type) -> [T] {
-        return self.flatMap { $0 as? T }
+        return self.compactMap { $0 as? T }
     }
 
     func grouped<Key>(by keySelector: (Iterator.Element) -> Key) -> [Key : [Iterator.Element]] {
