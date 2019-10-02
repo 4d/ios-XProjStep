@@ -121,7 +121,7 @@
 		484D615D1F335AF100F837D5 /* XcodeProj.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = XcodeProj.swift; sourceTree = "<group>"; };
 		484D615E1F335AF100F837D5 /* XcodeProjError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = XcodeProjError.swift; sourceTree = "<group>"; };
 		484D615F1F335AF100F837D5 /* XCVersionGroup.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = XCVersionGroup.swift; sourceTree = "<group>"; };
-		48BBC7572343582000445439 /* xprojstepDebug.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = xprojstepDebug.entitlements; sourceTree = "<group>"; };
+		48BBC7572343582000445439 /* XProjStep.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = XProjStep.entitlements; sourceTree = "<group>"; };
 		48C8EBDB1F335F63002B1D3E /* Cartfile */ = {isa = PBXFileReference; lastKnownFileType = text; path = Cartfile; sourceTree = "<group>"; };
 		48C8EBDD1F335FE5002B1D3E /* ArgumentConvertible.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArgumentConvertible.swift; sourceTree = "<group>"; };
 		48C8EBDE1F335FE5002B1D3E /* ArgumentDescription.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArgumentDescription.swift; sourceTree = "<group>"; };
@@ -152,7 +152,7 @@
 		484D61221F335A2100F837D5 = {
 			isa = PBXGroup;
 			children = (
-				48BBC7572343582000445439 /* xprojstepDebug.entitlements */,
+				48BBC7572343582000445439 /* XProjStep.entitlements */,
 				48C8EBDB1F335F63002B1D3E /* Cartfile */,
 				48C8EBF51F3370FB002B1D3E /* README.md */,
 				484D612D1F335A2100F837D5 /* Sources */,
@@ -521,7 +521,7 @@
 		484D61331F335A2100F837D5 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				CODE_SIGN_ENTITLEMENTS = xprojstepDebug.entitlements;
+				CODE_SIGN_ENTITLEMENTS = XProjStep.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 37UG5W39Z2;
@@ -538,6 +538,7 @@
 		484D61341F335A2100F837D5 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CODE_SIGN_ENTITLEMENTS = XProjStep.entitlements;
 				CODE_SIGN_IDENTITY = "-";
 				DEVELOPMENT_TEAM = 37UG5W39Z2;
 				ENABLE_HARDENED_RUNTIME = YES;
