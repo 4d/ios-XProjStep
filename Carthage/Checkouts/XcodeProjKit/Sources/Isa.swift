@@ -8,7 +8,7 @@
 
 import Foundation
 
-public enum Isa: String, CustomStringConvertible {
+public enum Isa: String, CaseIterable, CustomStringConvertible {
 
     case project = "PBXProject"
     case containerItemProxy = "PBXContainerItemProxy"
@@ -32,9 +32,20 @@ public enum Isa: String, CustomStringConvertible {
     case versionGroup = "XCVersionGroup"
     case configurationList = "XCConfigurationList"
     case buildConfiguration = "XCBuildConfiguration"
+    case remoteSwiftPackageReference = "XCRemoteSwiftPackageReference"
+    case swiftPackageProductDependency = "XCSwiftPackageProductDependency"
 
     public var description: String {
         return rawValue
+    }
+
+    static func from(className: String) -> Isa? {
+        for isa in Isa.allCases {
+            if className.contains(isa.rawValue) {
+                return isa
+            }
+        }
+        return nil
     }
 }
 
@@ -70,6 +81,8 @@ extension Isa {
         case .versionGroup: return XCVersionGroup.self
         case .configurationList: return XCConfigurationList.self
         case .buildConfiguration: return XCBuildConfiguration.self
+        case .remoteSwiftPackageReference: return XCRemoteSwiftPackageReference.self
+        case .swiftPackageProductDependency: return XCSwiftPackageProductDependency.self
         }
     }
 }

@@ -1,5 +1,68 @@
 # Commander Changelog
 
+## 0.9.2 (2021-06-08)
+
+### Bug Fixes
+
+- Commander will now throw an error when a command which takes no arguments or
+  options is invoked with `--help` or unknown arguments.
+
+## 0.9.1 (2019-09-23)
+
+### Enhancements
+
+- Usage/help output for commands which contain flags will now contain the short
+  flag, for example, `-v, --verbose`.
+  [#71](https://github.com/kylef/Commander/issues/71)
+
+### Bug Fixes
+
+- Fixed ordering of flags in the "Unknown Arguments" help output of a command.
+  Flags have previously been stored in an un orderered set and thus upon
+  printing them back out their order was not persisted and a flag part such as
+  `-user` can be printed as `-usre`.
+  [#78](https://github.com/kylef/Commander/issues/78)
+
+## 0.9.0 (2019-06-12)
+
+### Breaking
+
+- Support for Swift < 4.2 has been removed.
+
+### Enhancements
+
+- Added syntax for using array as a type with `Argument` instead of using
+  `VariadicArgument`:
+
+    ```swift
+    command(Argument<[String]>("names")) { names in }
+    ```
+
+- Added support for optional arguments and options, for example:
+
+    ```swift
+    command(Argument<String?>("name")) { name in }
+    command(Option<String?>("name", default: nil)) { name in }
+    ```
+
+- Added support for using `--` to signal that subsequent values should
+  be treated as arguments instead of options.  
+  [Tamas Lustyik](https://github.com/lvsti)
+
+- Output of `--help` for group commands will now sort the commands in
+  alphabetical order.  
+  [Cameron Mc Gorian](https://github.com/sbarow)
+
+### Bug Fixes
+
+- Showing default values for custom `ArgumentConvertible` types are now
+  supported in the `--help` output of commands.
+
+- Only print errors in red if the output terminal supports ANSI colour codes.
+  [#58](https://github.com/kylef/Commander/pull/58)
+
+- `ArgumentParser.isEmpty` will now return empty for empty arguments.
+
 ## 0.8.0
 
 ### Enhancements

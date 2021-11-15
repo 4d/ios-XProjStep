@@ -29,12 +29,21 @@ public class XcodeProj {
             guard let obj = dict[ref] else {
                 return nil
             }
-            if let t = obj as? T {
-                return t
+            if let castedObj = obj as? T {
+                return castedObj
             }
             return T(ref: ref, fields: obj.fields, objects: self)
         }
 
+        public func remove<T: PBXObject>(_ object: T) {
+            dict.removeValue(forKey: object.ref)
+        }
+
+        public func add<T: PBXObject>(_ object: T) {
+            dict[object.ref] = object
+        }
+
+        #if LAZY
         lazy var buildPhaseByFileRef: [XcodeUUID: PBXBuildPhase] = {
             let buildPhases = self.dict.values.of(type: PBXBuildPhase.self)
             var dict: [String: PBXBuildPhase] = [:]
@@ -45,8 +54,21 @@ public class XcodeProj {
             }
             return dict
         }()
+        #else
+        var buildPhaseByFileRef: [XcodeUUID: PBXBuildPhase] {
+            let buildPhases = self.dict.values.of(type: PBXBuildPhase.self)
+            var dict: [String: PBXBuildPhase] = [:]
+            for buildPhase in buildPhases {
+                for file in buildPhase.files {
+                    dict[file.ref] = buildPhase
+                }
+            }
+            return dict
+        }
+        #endif
 
     }
+
     public let objects: Objects
 
     // MARK: init
@@ -92,7 +114,7 @@ public class XcodeProj {
 
     public convenience init(propertyListData data: Data) throws {
         var format: PropertyListSerialization.PropertyListFormat = .binary
-        let obj = try PropertyListSerialization.propertyList(from: data, options:[], format: &format)
+        let obj = try PropertyListSerialization.propertyList(from: data, options: [], format: &format)
 
         guard let dict = obj as? PBXObject.Fields else {
             throw XcodeProjError.invalidData(object: obj)
@@ -107,20 +129,20 @@ public class XcodeProj {
 
         self.objects = Objects()
 
-        if let objs = dict[FieldKey.objects.rawValue] as? [String: PBXObject.Fields] {
+        if let objs = self.dict[FieldKey.objects.rawValue] as? [String: PBXObject.Fields] {
             // Create all objects
             for (ref, obj) in objs {
                 self.objects.dict[ref] = try XcodeProj.createObject(ref: ref, fields: obj, objects: self.objects)
             }
 
             // parsing project
-            if let rootObjectRef = dict[FieldKey.rootObject.rawValue] as? String {
+            if let rootObjectRef = self.dict[FieldKey.rootObject.rawValue] as? String {
                 if let projDict = objs[rootObjectRef] {
                     self.project = PBXProject(ref: rootObjectRef, fields: projDict, objects: self.objects)
                     if let mainGroup = self.project.mainGroup {
                         objects.fullFilePaths = paths(mainGroup, prefix: "")
                     } else {
-                        if let mainGroupref = self.project.string(.mainGroup) {
+                        if let mainGroupref = self.project.string(PBXProject.PBXKeys.mainGroup) {
                             throw XcodeProjError.objectMissing(key: mainGroupref, expectedType: .group)
                         } else {
                             throw XcodeProjError.fieldKeyMissing(.mainGroup)
@@ -151,12 +173,18 @@ public class XcodeProj {
 }
 
 let extractProjetName = "Build configuration list for PBXProject \""
-//swiftlint:disable:next force_try
+// swiftlint:disable:next force_try
 let extractProjetNameRegex = try! NSRegularExpression(pattern:
     "Build configuration list for PBXProject \"(.*)\"", options: [])
 
 extension XcodeProj: PBXObjectFactory {
-    public func object<T>(_ ref: String) -> T? where T : PBXObject {
+    public func object<T>(_ ref: String) -> T? where T: PBXObject {
         return self.objects.object(ref)
+    }
+    public func remove<T: PBXObject>(_ object: T) {
+        self.objects.remove(object)
+    }
+    public func add<T: PBXObject>(_ object: T) {
+        self.objects.add(object)
     }
 }

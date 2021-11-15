@@ -49,11 +49,11 @@ describe("PathKit") {
     $0.it("can be converted to a string description") {
       try expect(Path("/usr/bin/swift").description) == "/usr/bin/swift"
     }
-    
+
     $0.it("can be converted to a string") {
       try expect(Path("/usr/bin/swift").string) == "/usr/bin/swift"
     }
-    
+
     $0.it("can be converted to a url") {
       try expect(Path("/usr/bin/swift").url) == URL(fileURLWithPath: "/usr/bin/swift")
     }
@@ -167,8 +167,7 @@ describe("PathKit") {
   $0.it("can abbreviate paths on a case sensitive fs") {
     let home = Path.home.string
     let fakeFSInfo = FakeFSInfo(caseSensitive: true)
-    var path = Path("\(home.uppercased())")
-    path.fileSystemInfo = fakeFSInfo
+    let path = Path("\(home.uppercased())", fileSystemInfo: fakeFSInfo)
     
     try expect(path.abbreviate().string) == home.uppercased()
   }
@@ -176,8 +175,7 @@ describe("PathKit") {
   $0.it("can abbreviate paths on a case insensitive fs") {
     let home = Path.home.string
     let fakeFSInfo = FakeFSInfo(caseSensitive: false)
-    var path = Path("\(home.uppercased())")
-    path.fileSystemInfo = fakeFSInfo
+    let path = Path("\(home.uppercased())", fileSystemInfo: fakeFSInfo)
     
     try expect(path.abbreviate()) == Path("~")
   }
@@ -366,9 +364,9 @@ describe("PathKit") {
       let path = Path("/")
       let data = "Hi".data(using: String.Encoding.utf8, allowLossyConversion: true)
 
-      try expect {
+      try expect({
         try path.write(data!)
-      }.toThrow()
+      }).toThrow()
       #endif
     }
 
@@ -386,9 +384,9 @@ describe("PathKit") {
       #else
       let path = Path("/")
 
-      try expect {
+      try expect({
         try path.write("hi")
-      }.toThrow()
+      }).toThrow()
       #endif
     }
   }
@@ -508,6 +506,21 @@ describe("PathKit") {
 
       let results = try (fixtures + "permissions").children().map { $0.absolute() }.sorted(by: <)
       try expect(paths) == results.sorted(by: <)
+    }
+  }
+
+  $0.describe("#match") {
+    $0.it("can match pattern against relative path") {
+      try expect(Path("test.txt").match("test.txt")).to.beTrue()
+      try expect(Path("test.txt").match("*.txt")).to.beTrue()
+      try expect(Path("test.txt").match("*")).to.beTrue()
+      try expect(Path("test.txt").match("test.md")).to.beFalse()
+    }
+
+    $0.it("can match pattern against absolute path") {
+      try expect(Path("/home/kyle/test.txt").match("*.txt")).to.beTrue()
+      try expect(Path("/home/kyle/test.txt").match("/home/*.txt")).to.beTrue()
+      try expect(Path("/home/kyle/test.txt").match("*.md")).to.beFalse()
     }
   }
 }

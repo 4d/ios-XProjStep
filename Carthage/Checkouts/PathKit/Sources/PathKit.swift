@@ -19,25 +19,35 @@ public struct Path {
   public static let separator = "/"
 
   /// The underlying string representation
-  internal var path: String
+  internal let path: String
 
-  internal static var fileManager = FileManager.default
+  internal static let fileManager = FileManager.default
   
-  internal var fileSystemInfo: FileSystemInfo = DefaultFileSystemInfo()
+  internal let fileSystemInfo: FileSystemInfo
 
   // MARK: Init
 
   public init() {
-    self.path = ""
+    self.init("")
   }
 
   /// Create a Path from a given String
   public init(_ path: String) {
+    self.init(path, fileSystemInfo: DefaultFileSystemInfo())
+  }
+    
+  internal init(_ path: String, fileSystemInfo: FileSystemInfo) {
     self.path = path
+    self.fileSystemInfo = fileSystemInfo
   }
 
+  internal init(fileSystemInfo: FileSystemInfo) {
+    self.init("", fileSystemInfo: fileSystemInfo)
+  }
+    
   /// Create a Path by joining multiple path components together
   public init<S : Collection>(components: S) where S.Iterator.Element == String {
+    let path: String
     if components.isEmpty {
       path = "."
     } else if components.first == Path.separator && components.count > 1 {
@@ -46,6 +56,7 @@ public struct Path {
     } else {
       path = components.joined(separator: Path.separator)
     }
+    self.init(path)
   }
 }
 
@@ -65,7 +76,7 @@ extension Path : ExpressibleByStringLiteral {
   }
 
   public init(stringLiteral value: StringLiteralType) {
-    self.path = value
+    self.init(value)
   }
 }
 
@@ -445,7 +456,7 @@ extension Path {
     Path.current = self
     defer { Path.current = previous }
     try closure()
-    }
+  }
 }
 
 
@@ -577,7 +588,9 @@ extension Path {
 extension Path {
   public static func glob(_ pattern: String) -> [Path] {
     var gt = glob_t()
-    let cPattern = strdup(pattern)
+    guard let cPattern = strdup(pattern) else {
+      fatalError("strdup returned null: Likely out of memory")
+    }
     defer {
       globfree(&gt)
       free(cPattern)
@@ -605,6 +618,18 @@ extension Path {
 
   public func glob(_ pattern: String) -> [Path] {
     return Path.glob((self + pattern).description)
+  }
+
+  public func match(_ pattern: String) -> Bool {
+    guard let cPattern = strdup(pattern),
+          let cPath = strdup(path) else {
+      fatalError("strdup returned null: Likely out of memory")
+    }
+    defer {
+      free(cPattern)
+      free(cPath)
+    }
+    return fnmatch(cPattern, cPath, 0) == 0
   }
 }
 

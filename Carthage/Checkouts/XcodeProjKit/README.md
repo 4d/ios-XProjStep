@@ -6,7 +6,7 @@ Parse project file and write it to open step format.
 
 Plist files could be in binary, xml or open step format. All could be parsed natively using `PropertyListSerialization`.
 
-:warning: But you cannot write into open step format.
+:warning: But you cannot be written back into open step format.
 
 This project aim to
 - check xcode project file. Error could occurs after merging file using git.
@@ -14,7 +14,42 @@ This project aim to
 
 Alternatively you can use apple private framework DVTFoundation, like [Xcodeproj](https://github.com/CocoaPods/Xcodeproj) do.
 
+## Usage
+
+### Read
+
+```swift
+let xcodeProj = try XcodeProj(url: url)
+let project: PBXProject = xcodeProj.project
+
+let mainGroup: PBXGroup? = project.mainGroup
+let targets: [PBXNativeTarget] = project.targets
+let buildConfigurationList: XCConfigurationList? = project.buildConfigurationList
+```
+
+### Write
+
+```swift
+try xcodeProj.write(to: newURL, format: .openStep)
+```
+
 ## Setup
+
+### Using Swift Package Manager
+
+```swift
+let package = Package(
+    name: "MyProject",
+    dependencies: [
+        .package(url: "https://github.com/phimage/XcodeProjKit.git", .upToNextMajor(from: "2.2.0")),
+        ],
+    targets: [
+        .target(
+            name: "MyProject",
+            dependencies: ["XcodeProjKit"]),
+        ]
+)
+```
 
 ### Using Carthage
 
@@ -33,10 +68,6 @@ Add the project to your Podfile.
 pod "XcodeProjKit"
 ```
 
-### Using Swift Package Manager
-
-...
-
 ### Referenes
 
 - http://danwright.info/blog/2010/10/xcode-pbxproject-files/
@@ -46,6 +77,7 @@ pod "XcodeProjKit"
 ### Thanks
 
 - @Karumi for the test files : https://github.com/Karumi/Kin
+- @allu22 for the PR
 
 ### TODO
 

@@ -14,7 +14,7 @@ extension Sequence {
         return self.compactMap { $0 as? T }
     }
 
-    func grouped<Key>(by keySelector: (Iterator.Element) -> Key) -> [Key : [Iterator.Element]] {
+    func grouped<Key>(by keySelector: (Iterator.Element) -> Key) -> [Key: [Iterator.Element]] {
         var groupedBy: [Key: [Iterator.Element]] = [:]
 
         for element in self {

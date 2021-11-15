@@ -15,7 +15,7 @@ class XcodeProjKitParseKoTests: XCTestCase {
     
     func test001() {
         do {
-            try testParse("001")
+            try testParse("ko/001")
         } catch {
             // ok
         }
@@ -23,7 +23,7 @@ class XcodeProjKitParseKoTests: XCTestCase {
     
     func testmissingRoot() {
         do {
-            try testParse("missingRoot")
+            try testParse("ko/missingRoot")
         } catch XcodeProjError.objectMissing(_, let isa) {
             // ok
             XCTAssertEqual(isa, Isa.project)
@@ -33,12 +33,12 @@ class XcodeProjKitParseKoTests: XCTestCase {
     }
     
     func testParse(_ resource: String, expected: Error? = nil) throws {
-        if let url = bundle.url(forResource: resource, withExtension: "pbxproj") {
+        if let url = url(forResource: resource, withExtension: XcodeProj.pbxprojFileExtension) {
             let _ = try XcodeProj(url: url)
             XCTFail("Must not be able to read")
         } else {
             XCTFail("Missing resource \(resource)")
         }
     }
-    
+
 }
