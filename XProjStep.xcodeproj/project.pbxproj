@@ -50,6 +50,8 @@
 		484D61871F335B0A00F837D5 /* XcodeProj.swift in Sources */ = {isa = PBXBuildFile; fileRef = 484D615D1F335AF100F837D5 /* XcodeProj.swift */; };
 		484D61881F335B0A00F837D5 /* XcodeProjError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 484D615E1F335AF100F837D5 /* XcodeProjError.swift */; };
 		484D61891F335B0A00F837D5 /* XCVersionGroup.swift in Sources */ = {isa = PBXBuildFile; fileRef = 484D615F1F335AF100F837D5 /* XCVersionGroup.swift */; };
+		48AAFC642742679F00DAFA29 /* XCSwiftPackageProductDependency.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48AAFC632742679F00DAFA29 /* XCSwiftPackageProductDependency.swift */; };
+		48AAFC66274267A500DAFA29 /* XCRemoteSwiftPackageReference.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48AAFC65274267A500DAFA29 /* XCRemoteSwiftPackageReference.swift */; };
 		48C8EBE61F335FE9002B1D3E /* ArgumentConvertible.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48C8EBDD1F335FE5002B1D3E /* ArgumentConvertible.swift */; };
 		48C8EBE71F335FE9002B1D3E /* ArgumentDescription.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48C8EBDE1F335FE5002B1D3E /* ArgumentDescription.swift */; };
 		48C8EBE81F335FE9002B1D3E /* ArgumentParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48C8EBDF1F335FE5002B1D3E /* ArgumentParser.swift */; };
@@ -121,6 +123,8 @@
 		484D615D1F335AF100F837D5 /* XcodeProj.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = XcodeProj.swift; sourceTree = "<group>"; };
 		484D615E1F335AF100F837D5 /* XcodeProjError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = XcodeProjError.swift; sourceTree = "<group>"; };
 		484D615F1F335AF100F837D5 /* XCVersionGroup.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = XCVersionGroup.swift; sourceTree = "<group>"; };
+		48AAFC632742679F00DAFA29 /* XCSwiftPackageProductDependency.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = XCSwiftPackageProductDependency.swift; sourceTree = "<group>"; };
+		48AAFC65274267A500DAFA29 /* XCRemoteSwiftPackageReference.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = XCRemoteSwiftPackageReference.swift; sourceTree = "<group>"; };
 		48BBC7572343582000445439 /* XProjStep.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = XProjStep.entitlements; sourceTree = "<group>"; };
 		48C8EBDB1F335F63002B1D3E /* Cartfile */ = {isa = PBXFileReference; lastKnownFileType = text; path = Cartfile; sourceTree = "<group>"; };
 		48C8EBDD1F335FE5002B1D3E /* ArgumentConvertible.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArgumentConvertible.swift; sourceTree = "<group>"; };
@@ -223,6 +227,8 @@
 				484D615C1F335AF100F837D5 /* XcodeProj+Serialization.swift */,
 				484D615D1F335AF100F837D5 /* XcodeProj.swift */,
 				484D615E1F335AF100F837D5 /* XcodeProjError.swift */,
+				48AAFC65274267A500DAFA29 /* XCRemoteSwiftPackageReference.swift */,
+				48AAFC632742679F00DAFA29 /* XCSwiftPackageProductDependency.swift */,
 				484D615F1F335AF100F837D5 /* XCVersionGroup.swift */,
 			);
 			name = XcodeProjKit;
@@ -376,6 +382,7 @@
 				484D61801F335B0A00F837D5 /* SourceTreeFolder.swift in Sources */,
 				48C8EBF11F3364DF002B1D3E /* PathKit.swift in Sources */,
 				48C8EBEB1F335FE9002B1D3E /* Commands.swift in Sources */,
+				48AAFC642742679F00DAFA29 /* XCSwiftPackageProductDependency.swift in Sources */,
 				484D61841F335B0A00F837D5 /* XCConfigurationList.swift in Sources */,
 				48C8EBE71F335FE9002B1D3E /* ArgumentDescription.swift in Sources */,
 				484D61641F335B0A00F837D5 /* Path.swift in Sources */,
@@ -387,6 +394,7 @@
 				484D616B1F335B0A00F837D5 /* PBXContainerItemProxy.swift in Sources */,
 				484D61761F335B0A00F837D5 /* PBXReference.swift in Sources */,
 				484D61661F335B0A00F837D5 /* PBXBuildFile.swift in Sources */,
+				48AAFC66274267A500DAFA29 /* XCRemoteSwiftPackageReference.swift in Sources */,
 				484D61701F335B0A00F837D5 /* PBXHeadersBuildPhase.swift in Sources */,
 				484D61711F335B0A00F837D5 /* PBXNativeTarget.swift in Sources */,
 				48CAFC9F1F973BD000BCF23F /* PBXLegacyTarget.swift in Sources */,
