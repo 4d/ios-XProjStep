@@ -1,5 +1,7 @@
-# Invoices
+# XProjStep
 
-[Development #88993](https://project.wakanda.org/issues/88993)
+Convert Xcode project to open step format if has been converted to json or xml using plutil
 
-Application prototype based on 4D Invoices database.
+```bash
+xprojstep input.pbxproj --ouput output.pbxproj --format openstep
+```
