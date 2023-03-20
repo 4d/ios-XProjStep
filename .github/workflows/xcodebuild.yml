@@ -1,0 +1,19 @@
+name: xcodebuild
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+jobs:
+  build:
+
+    runs-on: macos-latest
+
+    steps:
+    - uses: actions/checkout@v3
+    - name: Build
+      run: xcodebuild -configuration Release | grep xcpretty
+    - name: Run tests
+      run: ./test.sh
