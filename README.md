@@ -25,8 +25,8 @@ xcodebuild -configuration Release # will create build/Release/xprojstep
 | Name | License | Usefulness |
 |-|-|-|
 | [XcodeProjKit](https://github.com/phimage/XcodeProjKit) | [MIT](https://github.com/phimage/XcodeProjKit/blob/master/LICENSE) | Parse and write pbxproj |
-| [Commander](https://github.com/kylef/Commander ) | [MIT](https://github.com/kylef/Commander/blob/master/LICENSE.md) | command line argument parser |
-| [PathKit](https://github.com/kylef/PathKit ) | [MIT](https://github.com/kylef/PathKitt/blob/master/LICENSE.md) | file management |
+| [Commander](https://github.com/kylef/Commander ) | [BSD 3](https://github.com/kylef/Commander/blob/master/LICENSE) | command line argument parser |
+| [PathKit](https://github.com/kylef/PathKit ) | [BSD 2](https://github.com/kylef/PathKit/blob/master/LICENSE.md) | file management |
 
 Dependencies has been downloaded using [`Carthage` package manager](https://github.com/Carthage/Carthage/)
 
