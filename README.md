@@ -1,5 +1,9 @@
 # XProjStep
 
+[![Platform](http://img.shields.io/badge/platform-macOS-lightgrey.svg?style=flat)](https://developer.apple.com/resources/)
+[![Language](http://img.shields.io/badge/language-swift-orange.svg?style=flat)](https://developer.apple.com/swift)
+[![xcodebuild](https://github.com/4d/ios-XProjStep/actions/workflows/xcodebuild.yml/badge.svg)](https://github.com/4d/ios-XProjStep/actions/workflows/xcodebuild.yml)
+
 Convert Xcode project `pbxproj` file to standard format, if has been converted to json or xml using plutil.
 
 ```bash
